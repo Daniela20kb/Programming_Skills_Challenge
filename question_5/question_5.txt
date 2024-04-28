@@ -1,0 +1,137 @@
+#include <stdio.h>
+#include <iostream>
+#include <string.h>
+using namespace std;
+
+string ConcatRemove(string s, string t, int k)
+{
+    // constrains
+    int len_s = s.length();
+    int len_t = t.length();
+    if ((len_s < 1) || (len_s > 100))
+        return("no");
+    if ((len_t < 1) || (len_t > 100))
+        return("no");
+    if((k < 1) || (k > 100))
+        return("no");
+        
+    string abc = "abcdefghijklmnopqrstuvwxyz";
+    size_t found;
+    for (int i = 0; i < len_s; i++)
+    {
+        char letter = s[i];
+        found = abc.find(letter);
+        if (found==std::string::npos)
+            return("no");
+    }
+    for (int i = 0; i < len_t; i++)
+    {
+        char letter = t[i];
+        found = abc.find(letter);
+        if (found==std::string::npos)
+            return("no");
+    }
+    
+    // implementation
+    int operations = 0;
+    string common = "";
+    if (s != t)
+    {
+        for(int i = 0; (i < len_s) && (i < len_t); i++)
+        {
+            if(s[i] == t[i])
+            {
+                common += s[i];
+            }
+        }
+        int len_c = common.length();
+        if (len_c > 0)
+        {
+            // operations = chars to remove + chars to concat
+            operations = (len_s - len_c) + (len_t - len_c);
+        }
+    }
+    if (operations != k)
+        return("no");
+        
+    return("yes");
+}
+
+string ExecuteTests()
+{
+    string answer, s, t;
+    int k;
+    // ---------- out of constrains----------
+    // test 1: len_s < 1
+    s = "";
+    answer = ConcatRemove(s, "a", 1);
+    if (answer != "no")
+        return("error at test 1");
+    // test 2: len_s > 100
+    for (int i = 0; i < 100; i++)
+    {
+        s += "a";
+    }
+    answer = ConcatRemove(s, "a", 1);
+    if (answer != "no")
+        return("error at test 2");
+        
+    // test 3: len_t < 1
+    t = "";
+    answer = ConcatRemove("a", t, 1);
+    if (answer != "no")
+        return("error at test 3");
+    // test 4: len_t > 100
+    for (int i = 0; i < 100; i++)
+    {
+        t += "a";
+    }
+    answer = ConcatRemove("a", t, 1);
+    if (answer != "no")
+        return("error at test 4");
+        
+    // test 5: k < 1
+    answer = ConcatRemove("a", "b", 0);
+    if (answer != "no")
+        return("error at test 5");
+    // test 6: k > 100
+    answer = ConcatRemove("a", "b", 100);
+    if (answer != "no")
+        return("error at test 6");
+        
+    // test 7: s as number
+    answer = ConcatRemove("1", "b", 1);
+    if (answer != "no")
+        return("error at test 7");   
+    // test 8: t as number
+    answer = ConcatRemove("a", "1", 1);
+    if (answer != "no")
+        return("error at test 8");   
+    
+    // ---------- correct inputs ----------
+    // test 9: answer is yes
+    s = "blablablabla";
+    t = "blablabcde";
+    k = 8;
+    answer = ConcatRemove(s, t, k);
+    if (answer != "yes")
+        return("error at test 9");  
+    // test 10: answer is no
+    s = "tab";
+    t = "tab";
+    k = 7;
+    answer = ConcatRemove(s, t, k);
+    if (answer != "no")
+        return("error at test 10");  
+        
+    // all tests ok
+    return("success!");  
+}
+
+int main()
+{
+    string answer = ExecuteTests();
+    cout << answer;
+
+    return 0;
+}

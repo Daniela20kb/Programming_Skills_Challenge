@@ -1,0 +1,57 @@
+-- code for create and insert data on tables
+
+CREATE TABLE Students (
+    ID int,
+    Name varchar(255),
+    Value int
+);
+
+CREATE TABLE Notes (
+    Grade int,
+    Min_Value int,
+    Max_Value int
+);
+
+
+INSERT INTO Students (ID, Name, Value)
+VALUES (1, 'Julia', 81),
+(2, 'Carol', 68),
+(3, 'Maria', 99),
+(4, 'Andreia', 78),
+(5, 'Jaqueline', 63),
+(6, 'Marcela', 88);
+  
+INSERT INTO Notes (Grade, Min_Value, Max_Value)
+VALUES (1,0,9),
+(2,10,19),
+(3,20,29),
+(4,30,39),
+(5,40,49),
+(6,50,59),
+(7,60,69),
+(8,70,79),
+(9,80,89),
+(10,90,100);  
+
+-- query
+
+CREATE TABLE b1 AS
+SELECT * from(
+  SELECT s.Name, n.Grade, s.Value from Students as s, Notes as n 
+  where s.Value between n.Min_Value and n.Max_Value
+  and s.Value >= 70
+  order by s.Value DESC
+);
+
+CREATE TABLE b2 AS
+SELECT * from(
+  SELECT IIF(s.Value < 70, NULL, NULL) as Name, n.Grade, s.Value 
+  from Students as s, Notes as n 
+  where s.Value between n.Min_Value and n.Max_Value
+  and s.Value < 70
+  ORDER BY s.Name DESC
+);
+
+SELECT * from b1
+union all
+SELECT * from b2

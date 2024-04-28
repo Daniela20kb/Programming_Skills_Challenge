@@ -1,0 +1,17 @@
+#include <stdio.h>
+#include <iostream>
+#include <string.h>
+using namespace std;
+
+
+int main()
+{
+    string str;// = "ola123";
+    cout << "string: ";
+    cin >> str;
+    cout << endl;
+    for (std::string::iterator it=str.end(); it!=str.begin()-1; --it)
+        cout << *it;
+    
+    return 0;
+}

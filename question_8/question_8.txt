@@ -1,0 +1,23 @@
+-- create and insert data on tables
+CREATE TABLE dogs (
+    ID int,
+    Name varchar(255)
+);
+
+CREATE TABLE cats (
+    ID int,
+    Name varchar(255)
+);
+
+INSERT INTO dogs (ID, Name)
+VALUES (1, 'Julia'),
+  (2, 'Carol');
+  
+INSERT INTO cats (ID, Name)
+VALUES (1, 'Julia'),
+  (2, 'Maria');
+
+-- query
+SELECT Name from dogs
+union 
+SELECT Name from cats
